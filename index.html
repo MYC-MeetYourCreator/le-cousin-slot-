@@ -4,15 +4,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080b14">
+<meta name="theme-color" content="#080b13">
 <title>LE COUSIN — Night Shift</title>
 
 <style>
 :root {
-  --red: #ff294b;
-  --blue: #3184ff;
-  --gold: #ffd477;
-  --panel: rgba(10, 14, 26, .92);
+  --gold: #f5cc78;
+  --red: #ff304f;
+  --blue: #3989ff;
+  --muted: #929db1;
+  --panel: rgba(9, 13, 24, .92);
 }
 
 * { box-sizing: border-box; }
@@ -22,11 +23,16 @@ body {
   min-height: 100vh;
   color: #fff;
   font-family: Arial, Helvetica, sans-serif;
-  background: #080b14;
+  background: #070a12;
   overflow-x: hidden;
 }
 
 button { font: inherit; }
+
+button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
 
 .scene {
   position: fixed;
@@ -34,140 +40,133 @@ button { font: inherit; }
   z-index: -2;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 50% 80%, #283754 0%, transparent 45%),
-    linear-gradient(#070b17 0%, #111b2e 65%, #080b12 100%);
+    radial-gradient(ellipse at 50% 75%, #263956 0%, transparent 48%),
+    linear-gradient(180deg, #070a14 0%, #121d31 65%, #080b12 100%);
 }
 
 .city {
   position: absolute;
-  bottom: 0;
-  width: 100%;
+  inset: auto 0 0;
   height: 27%;
   opacity: .8;
   background:
-    linear-gradient(90deg,
-      transparent 0 3%, #080d18 3% 8%,
-      transparent 8% 10%, #080d18 10% 17%,
-      transparent 17% 20%, #080d18 20% 26%,
-      transparent 26% 29%, #080d18 29% 37%,
-      transparent 37% 40%, #080d18 40% 49%,
-      transparent 49% 52%, #080d18 52% 59%,
-      transparent 59% 62%, #080d18 62% 70%,
-      transparent 70% 73%, #080d18 73% 83%,
-      transparent 83% 86%, #080d18 86% 95%,
-      transparent 95%);
+    repeating-linear-gradient(
+      90deg,
+      #080c16 0 5%,
+      #111b2b 5% 5.3%,
+      #080c16 5.3% 10%
+    );
   clip-path: polygon(
-    0 35%, 4% 35%, 4% 15%, 9% 15%, 9% 45%,
-    15% 45%, 15% 5%, 21% 5%, 21% 38%,
-    28% 38%, 28% 20%, 35% 20%, 35% 48%,
-    42% 48%, 42% 0, 49% 0, 49% 38%,
-    57% 38%, 57% 14%, 64% 14%, 64% 45%,
-    72% 45%, 72% 10%, 78% 10%, 78% 35%,
-    85% 35%, 85% 20%, 92% 20%, 92% 42%,
-    100% 42%, 100% 100%, 0 100%
+    0 40%, 5% 40%, 5% 18%, 11% 18%, 11% 48%,
+    17% 48%, 17% 8%, 23% 8%, 23% 42%,
+    30% 42%, 30% 22%, 37% 22%, 37% 47%,
+    44% 47%, 44% 0, 51% 0, 51% 42%,
+    58% 42%, 58% 16%, 65% 16%, 65% 45%,
+    73% 45%, 73% 8%, 80% 8%, 80% 38%,
+    88% 38%, 88% 20%, 94% 20%, 94% 43%,
+    100% 43%, 100% 100%, 0 100%
   );
 }
 
 .light {
   position: absolute;
-  top: -25%;
-  width: 30vw;
-  height: 100vh;
-  opacity: .14;
-  filter: blur(18px);
+  top: -30%;
+  height: 115vh;
+  width: 24vw;
+  filter: blur(30px);
+  opacity: .17;
   transform-origin: top center;
   pointer-events: none;
 }
 
 .light.red {
   left: 12%;
-  background: linear-gradient(180deg, #ff1744, transparent);
-  transform: rotate(28deg);
-  animation: searchRed 6s ease-in-out infinite alternate;
+  background: linear-gradient(#ff2045, transparent);
+  transform: rotate(25deg);
+  animation: sweepRed 7s ease-in-out infinite alternate;
 }
 
 .light.blue {
   right: 12%;
-  background: linear-gradient(180deg, #2675ff, transparent);
-  transform: rotate(-28deg);
-  animation: searchBlue 7s ease-in-out infinite alternate;
+  background: linear-gradient(#2877ff, transparent);
+  transform: rotate(-25deg);
+  animation: sweepBlue 8s ease-in-out infinite alternate;
 }
 
-@keyframes searchRed {
-  to { transform: translateX(16vw) rotate(12deg); opacity: .24; }
+@keyframes sweepRed {
+  to { transform: translateX(18vw) rotate(8deg); opacity: .28; }
 }
 
-@keyframes searchBlue {
-  to { transform: translateX(-16vw) rotate(-12deg); opacity: .24; }
+@keyframes sweepBlue {
+  to { transform: translateX(-18vw) rotate(-8deg); opacity: .28; }
 }
 
 .heli {
   position: absolute;
-  top: 11%;
-  left: -180px;
-  font-size: clamp(42px, 7vw, 80px);
-  filter: drop-shadow(0 0 14px #7ba6ff);
-  animation: fly 22s linear infinite;
+  top: 12%;
+  left: -100px;
+  font-size: clamp(40px, 6vw, 72px);
+  filter: drop-shadow(0 0 14px #77a9ff);
+  animation: fly 24s linear infinite;
 }
 
 .heli::after {
   content: "";
   position: absolute;
-  width: 150px;
+  width: 125px;
   height: 2px;
-  background: #9dbdff;
-  left: 35%;
-  top: -5px;
+  left: 40%;
+  top: 0;
+  background: #d9e7ff;
   transform-origin: left;
   animation: rotor .08s linear infinite alternate;
 }
 
 @keyframes fly {
-  from { left: -180px; transform: translateY(0); }
-  50% { transform: translateY(28px); }
-  to { left: calc(100% + 180px); transform: translateY(-5px); }
+  0% { left: -100px; transform: translateY(0); }
+  45% { transform: translateY(25px); }
+  100% { left: calc(100% + 100px); transform: translateY(-8px); }
 }
 
 @keyframes rotor {
-  from { transform: rotate(-4deg); }
-  to { transform: rotate(4deg); }
+  from { transform: rotate(-5deg); }
+  to { transform: rotate(5deg); }
 }
 
 .siren {
   position: fixed;
   top: 0;
   bottom: 0;
-  width: 16vw;
+  width: 15vw;
   filter: blur(50px);
   opacity: .18;
   pointer-events: none;
-  animation: flash 1.2s steps(2, end) infinite;
+  animation: flash 1.4s steps(2, end) infinite;
 }
 
 .siren.red { left: -9vw; background: var(--red); }
 .siren.blue {
   right: -9vw;
   background: var(--blue);
-  animation-delay: .6s;
+  animation-delay: .7s;
 }
 
 @keyframes flash {
-  0%, 100% { opacity: .08; }
+  0%, 100% { opacity: .07; }
   50% { opacity: .28; }
 }
 
 .app {
-  width: min(100% - 24px, 780px);
+  width: min(100% - 24px, 860px);
   margin: auto;
-  padding: 22px 0 32px;
+  padding: 22px 0 30px;
 }
 
 header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   gap: 12px;
-  margin-bottom: 24px;
 }
 
 .brand {
@@ -177,82 +176,86 @@ header {
 }
 
 .logo {
-  width: 52px;
-  height: 52px;
+  width: 50px;
+  height: 50px;
   display: grid;
   place-items: center;
-  border: 1px solid #e4bd73;
-  background: linear-gradient(135deg, #282b39, #0b0e17);
   color: var(--gold);
-  font-weight: 900;
   font-size: 19px;
-  transform: skew(-5deg);
-  box-shadow: 0 0 20px #e8b34b24;
+  font-weight: 900;
+  border: 1px solid #d5b36d;
+  background: linear-gradient(140deg, #303647, #090d17);
+  box-shadow: 0 0 22px #f5cc7818;
 }
 
 .brand h1 {
   margin: 0;
-  letter-spacing: 3px;
   font-size: clamp(18px, 4vw, 25px);
+  letter-spacing: 3px;
 }
 
 .brand p {
   margin: 5px 0 0;
-  color: #8c9bb6;
+  color: #8996ae;
   font-size: 9px;
-  letter-spacing: 2px;
+  letter-spacing: 1.8px;
 }
 
 .demo {
-  color: #ff8295;
-  border: 1px solid #ff294b66;
-  background: #ff294b13;
   padding: 8px 10px;
-  font-size: 10px;
+  color: #ff9ba9;
+  background: #ff304f12;
+  border: 1px solid #ff304f66;
+  font-size: 9px;
   letter-spacing: 1px;
   white-space: nowrap;
 }
 
-.intro { text-align: center; margin: 28px 0 22px; }
+.intro {
+  text-align: center;
+  margin: 30px 0 23px;
+}
 
 .eyebrow {
   color: var(--gold);
-  letter-spacing: 4px;
   font-size: 10px;
+  letter-spacing: 4px;
 }
 
 .intro h2 {
   margin: 10px 0;
-  font-size: clamp(27px, 6vw, 43px);
+  font-size: clamp(28px, 6vw, 44px);
   letter-spacing: 1px;
   text-shadow: 0 3px 24px #000;
 }
 
 .intro h2 span {
   color: var(--gold);
-  text-shadow: 0 0 24px #ffb52f55;
+  text-shadow: 0 0 22px #ffbb4b38;
 }
 
-.intro p { color: #a9b4c8; font-size: 12px; }
+.intro p {
+  color: #a9b4c8;
+  font-size: 12px;
+}
 
 .machine {
-  padding: 12px;
-  border: 1px solid #d8b77b99;
-  border-radius: 15px;
-  background: linear-gradient(145deg, #202638f2, #090d18f7 65%);
-  box-shadow: 0 20px 70px #000b, 0 0 35px #477fff12,
-    inset 0 0 0 3px #ffffff08;
+  padding: 13px;
+  border: 1px solid #d9b9768c;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #20283aee, #080c16f5 70%);
+  box-shadow: 0 20px 70px #000a, inset 0 0 0 3px #ffffff06;
 }
 
 .machine-head, .machine-foot {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
-  padding: 8px 5px 12px;
-  color: #aab7cf;
+  padding: 7px 5px 13px;
+  color: #aab6ca;
   font-size: 9px;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.4px;
 }
 
 .machine-head strong { color: var(--gold); }
@@ -260,48 +263,60 @@ header {
 .reels {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 5px;
-  padding: 8px;
-  border-radius: 9px;
-  border: 1px solid #ffffff18;
-  background: #05070d;
-  box-shadow: inset 0 0 25px #000;
+  gap: 0;
+  padding: 5px;
+  border: 1px solid #ffffff12;
+  border-radius: 10px;
+  background:
+    radial-gradient(ellipse at center, #172137, #05070d 80%);
+  box-shadow: inset 0 0 28px #000c;
+  overflow: hidden;
 }
 
-.symbol {
-  aspect-ratio: .82;
+.reel {
+  display: grid;
+  grid-template-rows: repeat(6, minmax(0, 1fr));
   min-width: 0;
+  overflow: hidden;
+  border-right: 1px solid #d4b87538;
+  background: linear-gradient(
+    180deg,
+    rgba(23, 33, 51, .32),
+    rgba(4, 8, 16, .5)
+  );
+}
+
+.reel:last-child { border-right: 0; }
+
+.symbol {
+  min-width: 0;
+  aspect-ratio: .8;
   display: grid;
   place-items: center;
   position: relative;
   overflow: hidden;
-  border-radius: 6px;
-  border: 1px solid #ffffff14;
-  background:
-    radial-gradient(circle at 50% 30%, #ffffff16, transparent 60%),
-    linear-gradient(145deg, #252d40, #111725);
-  font-size: clamp(22px, 6vw, 43px);
-  text-shadow: 0 3px 8px #0009;
-  transition: transform .15s, border-color .15s;
+  font-size: clamp(23px, 5.5vw, 46px);
+  line-height: 1;
+  text-shadow: 0 3px 8px #000a, 0 0 13px #ffffff15;
+  border-bottom: 1px solid #ffffff0c;
+  background: transparent;
+  transition: background .2s, filter .2s;
 }
 
-.symbol::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(130deg, #ffffff09, transparent 45%);
-  pointer-events: none;
-}
+.symbol:last-child { border-bottom: 0; }
 
 .symbol.win {
-  border-color: var(--gold);
-  background: linear-gradient(145deg, #594522, #19170f);
-  box-shadow: 0 0 15px #ffc85b55;
-  animation: winPulse .65s ease-in-out infinite alternate;
+  background: radial-gradient(
+    ellipse at center,
+    #f5cc7838,
+    #dca3420a 72%
+  );
+  filter: drop-shadow(0 0 8px #ffd47780);
+  animation: winPulse .7s ease-in-out infinite alternate;
 }
 
 @keyframes winPulse {
-  to { transform: scale(.94); box-shadow: 0 0 24px #ffc85b99; }
+  to { background-color: #e7b65318; }
 }
 
 .machine-foot {
@@ -309,12 +324,15 @@ header {
   color: #8491a8;
 }
 
-#status { color: #a8c8ff; text-align: right; }
+#status {
+  color: #b8d0ff;
+  text-align: right;
+}
 
 .controls {
   display: grid;
   grid-template-columns: 1fr 1fr 1.2fr;
-  gap: 9px;
+  gap: 10px;
   margin-top: 14px;
 }
 
@@ -334,7 +352,7 @@ header {
   letter-spacing: 1px;
 }
 
-.value { font-size: clamp(17px, 4vw, 23px); font-weight: 800; }
+.value { font-size: clamp(17px, 4vw, 23px); }
 .note { display: block; margin-top: 5px; color: #66748d; font-size: 8px; }
 
 .bet-buttons {
@@ -347,28 +365,35 @@ header {
 .bet-buttons button {
   width: 27px;
   height: 27px;
+  color: white;
   border: 1px solid #ffffff25;
   border-radius: 5px;
-  color: white;
   background: #ffffff0b;
   cursor: pointer;
+}
+
+.bet-buttons button:disabled {
+  opacity: .4;
+  cursor: not-allowed;
 }
 
 #bet-value { font-size: 18px; }
 
 .spin {
-  border: 1px solid #ffe3a0;
+  min-height: 70px;
+  border: 1px solid #ffe4a4;
   border-radius: 10px;
-  background: linear-gradient(135deg, #ffda84, #c98929);
-  color: #211607;
+  color: #241807;
+  background: linear-gradient(135deg, #ffdf91, #c78b2d);
+  font-size: 17px;
   font-weight: 900;
   letter-spacing: 2px;
   cursor: pointer;
-  box-shadow: 0 5px 22px #e8a32f38;
-  transition: transform .15s, filter .15s;
+  box-shadow: 0 5px 22px #e8a32f30;
+  transition: filter .15s, transform .15s;
 }
 
-.spin:hover { filter: brightness(1.12); transform: translateY(-1px); }
+.spin:hover { filter: brightness(1.12); }
 .spin:active { transform: scale(.97); }
 .spin:disabled { opacity: .55; cursor: wait; }
 
@@ -376,36 +401,39 @@ header {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 15px;
   margin-top: 12px;
+  padding: 14px;
   border: 1px solid #ffffff17;
   border-radius: 10px;
-  background: #0a0e19dc;
+  background: #0a0e19df;
 }
 
-.result-icon { font-size: 26px; color: var(--gold); }
+.result-icon { color: var(--gold); font-size: 27px; }
 .result small { color: #8996ae; font-size: 9px; letter-spacing: 1px; }
 .result strong { display: block; margin-top: 5px; font-size: 19px; }
 
 footer {
-  text-align: center;
   padding-top: 22px;
   color: #65718a;
+  text-align: center;
   font-size: 9px;
   line-height: 1.8;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.3px;
 }
 
-@media (max-width: 430px) {
-  .app { width: calc(100% - 16px); padding-top: 14px; }
-  .logo { width: 42px; height: 42px; }
+@media (max-width: 480px) {
+  .app { width: calc(100% - 14px); padding-top: 14px; }
+  .logo { width: 40px; height: 40px; }
   .brand { gap: 8px; }
+  .brand h1 { letter-spacing: 2px; }
+  .brand p { font-size: 7px; letter-spacing: 1px; }
   .demo { padding: 7px; font-size: 8px; }
   .machine { padding: 7px; }
-  .reels { gap: 3px; padding: 5px; }
+  .reels { padding: 3px; }
+  .symbol { font-size: clamp(21px, 6.4vw, 32px); }
   .controls { gap: 5px; }
   .stat, .bet { padding: 10px 7px; }
-  .machine-head, .machine-foot { font-size: 8px; letter-spacing: .7px; }
+  .machine-head, .machine-foot { font-size: 8px; letter-spacing: .5px; }
 }
 </style>
 </head>
@@ -417,6 +445,7 @@ footer {
   <div class="city"></div>
   <div class="heli">🚁</div>
 </div>
+
 <div class="siren red" aria-hidden="true"></div>
 <div class="siren blue" aria-hidden="true"></div>
 
@@ -426,7 +455,7 @@ footer {
       <div class="logo">LC</div>
       <div>
         <h1>LE COUSIN</h1>
-        <p>NIGHT SHIFT • ORIGINAL DEMO</p>
+        <p>NIGHT SHIFT · ORIGINAL DEMO</p>
       </div>
     </div>
     <div class="demo">● DEMO MODE</div>
@@ -444,7 +473,7 @@ footer {
       <strong>✦ 5 × 6 ✦</strong>
     </div>
 
-    <div class="reels" id="reels" aria-label="Slot grid"></div>
+    <div class="reels" id="reels" aria-label="5 columns and 6 rows"></div>
 
     <div class="machine-foot">
       <span>VIRTUAL CREDITS ONLY</span>
@@ -462,14 +491,14 @@ footer {
     <div class="bet">
       <span class="label">BET / SPIN</span>
       <div class="bet-buttons">
-        <button id="bet-down" aria-label="Decrease bet">−</button>
+        <button id="bet-down" type="button" aria-label="Decrease bet">−</button>
         <strong id="bet-value">10</strong>
-        <button id="bet-up" aria-label="Increase bet">+</button>
+        <button id="bet-up" type="button" aria-label="Increase bet">+</button>
       </div>
       <span class="note">VIRTUAL BET</span>
     </div>
 
-    <button class="spin" id="spin">↻ SPIN</button>
+    <button class="spin" id="spin" type="button">↻ SPIN</button>
   </section>
 
   <section class="result" aria-live="polite">
@@ -482,7 +511,7 @@ footer {
 
   <footer>
     MADE BY TWO COUSINS, FOR TWO COUSINS.<br>
-    PRIVATE DEMO CONCEPT • NO REAL MONEY
+    ORIGINAL DEMO · VIRTUAL CREDITS ONLY
   </footer>
 </main>
 
@@ -498,12 +527,14 @@ const symbols = [
   { icon: "💵", weight: 12, pay: 2 }
 ];
 
-const reels = document.getElementById("reels");
+const reelsContainer = document.getElementById("reels");
 const balanceText = document.getElementById("balance");
 const betText = document.getElementById("bet-value");
 const winText = document.getElementById("win");
 const statusText = document.getElementById("status");
 const spinButton = document.getElementById("spin");
+const downButton = document.getElementById("bet-down");
+const upButton = document.getElementById("bet-up");
 
 let balance = 1000;
 let bet = 10;
@@ -511,40 +542,49 @@ let spinning = false;
 let cells = [];
 
 function randomSymbol() {
-  const total = symbols.reduce((sum, symbol) => sum + symbol.weight, 0);
+  const total = symbols.reduce((sum, item) => sum + item.weight, 0);
   let roll = Math.random() * total;
 
-  for (const symbol of symbols) {
-    roll -= symbol.weight;
-    if (roll < 0) return symbol;
+  for (const item of symbols) {
+    roll -= item.weight;
+    if (roll < 0) return item;
   }
 
   return symbols[symbols.length - 1];
 }
 
 function renderGrid() {
-  reels.innerHTML = "";
+  reelsContainer.innerHTML = "";
   cells = [];
 
-  for (let i = 0; i < 30; i++) {
-    const cell = document.createElement("div");
-    cell.className = "symbol";
-    cell.setAttribute("role", "gridcell");
+  // Each reel is a separate vertical column of six symbols.
+  for (let col = 0; col < 5; col++) {
+    const reel = document.createElement("div");
+    reel.className = "reel";
+    reel.setAttribute("aria-label", `Column ${col + 1}`);
 
-    const symbol = randomSymbol();
-    cell.textContent = symbol.icon;
-    cell.dataset.symbol = symbol.icon;
+    for (let row = 0; row < 6; row++) {
+      const cell = document.createElement("div");
+      const item = randomSymbol();
 
-    reels.appendChild(cell);
-    cells.push(cell);
+      cell.className = "symbol";
+      cell.textContent = item.icon;
+      cell.dataset.symbol = item.icon;
+      cell.setAttribute("role", "gridcell");
+
+      reel.appendChild(cell);
+      cells.push(cell);
+    }
+
+    reelsContainer.appendChild(reel);
   }
 }
 
 function updateUI() {
   balanceText.textContent = balance.toLocaleString("en-US");
   betText.textContent = bet;
-  document.getElementById("bet-down").disabled = spinning || bet <= 10;
-  document.getElementById("bet-up").disabled = spinning || bet >= 100;
+  downButton.disabled = spinning || bet <= 10;
+  upButton.disabled = spinning || bet >= 100;
   spinButton.disabled = spinning || balance < bet;
 }
 
@@ -554,29 +594,29 @@ function sleep(ms) {
 
 function evaluateGrid() {
   let payout = 0;
-  let wins = [];
+  const winningCells = [];
 
-  // Demo rule: evaluate horizontal groups of 3+ matching symbols.
+  // Simple demo rule: matching horizontal runs of 3 or more.
   for (let row = 0; row < 6; row++) {
     let col = 0;
 
     while (col < 5) {
-      const start = row * 5 + col;
-      const icon = cells[start].dataset.symbol;
+      const firstIndex = col * 6 + row;
+      const icon = cells[firstIndex].dataset.symbol;
       let length = 1;
 
-      while (
-        col + length < 5 &&
-        cells[row * 5 + col + length].dataset.symbol === icon
-      ) {
+      while (col + length < 5) {
+        const nextIndex = (col + length) * 6 + row;
+        if (cells[nextIndex].dataset.symbol !== icon) break;
         length++;
       }
 
       if (length >= 3) {
-        const symbol = symbols.find(item => item.icon === icon);
-        payout += bet * symbol.pay * (length - 2);
-        for (let i = 0; i < length; i++) {
-          wins.push(cells[row * 5 + col + i]);
+        const item = symbols.find(symbol => symbol.icon === icon);
+        payout += bet * item.pay * (length - 2);
+
+        for (let offset = 0; offset < length; offset++) {
+          winningCells.push(cells[(col + offset) * 6 + row]);
         }
       }
 
@@ -584,7 +624,7 @@ function evaluateGrid() {
     }
   }
 
-  wins.forEach(cell => cell.classList.add("win"));
+  winningCells.forEach(cell => cell.classList.add("win"));
   return payout;
 }
 
@@ -595,36 +635,37 @@ async function spin() {
   balance -= bet;
   winText.textContent = "Spinning...";
   statusText.textContent = "MISSION IN PROGRESS";
-  updateUI();
 
   cells.forEach(cell => cell.classList.remove("win"));
+  updateUI();
 
-  // A short visual shuffle before the result settles.
-  for (let frame = 0; frame < 8; frame++) {
+  for (let frame = 0; frame < 10; frame++) {
     cells.forEach(cell => {
-      const symbol = randomSymbol();
-      cell.textContent = symbol.icon;
-      cell.dataset.symbol = symbol.icon;
+      const item = randomSymbol();
+      cell.textContent = item.icon;
+      cell.dataset.symbol = item.icon;
     });
-    await sleep(85 + frame * 12);
+
+    await sleep(65 + frame * 15);
   }
 
   const payout = evaluateGrid();
   balance += payout;
 
   winText.textContent = payout.toLocaleString("en-US") + " credits";
-  statusText.textContent = payout > 0 ? "NICE HIT!" : "TRY AGAIN";
+  statusText.textContent = payout > 0 ? "NICE HIT!" : "NO HIT — TRY AGAIN";
+
   spinning = false;
   updateUI();
 }
 
-document.getElementById("bet-down").addEventListener("click", () => {
+downButton.addEventListener("click", () => {
   if (spinning) return;
   bet = Math.max(10, bet - 10);
   updateUI();
 });
 
-document.getElementById("bet-up").addEventListener("click", () => {
+upButton.addEventListener("click", () => {
   if (spinning) return;
   bet = Math.min(100, bet + 10);
   updateUI();
