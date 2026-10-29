@@ -1,0 +1,39 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  background:
+    radial-gradient(ellipse at 50% 100%, #202b46 0%, transparent 55%),
+    linear-gradient(180deg, #080b14 0%, #111827 55%, #090b12 100%);
+  overflow-x: hidden;
+}
+
+.game {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.game::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 15% 35%, rgba(255, 25, 55, .15), transparent 35%),
+    radial-gradient(ellipse at 85% 35%, rgba(30, 95, 255, .18), transparent 35%);
+  animation: cityGlow 5s ease-in-out infinite alternate;
+}
+
+@keyframes cityGlow {
+  from { opacity: .55; }
+  to   { opacity: 1; }
+}
