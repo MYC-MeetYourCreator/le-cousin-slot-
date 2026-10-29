@@ -1,114 +1,639 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="el">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080b14">
+<title>LE COUSIN — Night Shift</title>
 
-  <meta name="theme-color" content="#100c19">
-  <meta name="description" content="Le Cousin — a private slot demo">
+<style>
+:root {
+  --red: #ff294b;
+  --blue: #3184ff;
+  --gold: #ffd477;
+  --panel: rgba(10, 14, 26, .92);
+}
 
-  <title>Le Cousin | Slot Demo</title>
+* { box-sizing: border-box; }
 
-  <link rel="stylesheet" href="style.css">
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #080b14;
+  overflow-x: hidden;
+}
+
+button { font: inherit; }
+
+.scene {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 80%, #283754 0%, transparent 45%),
+    linear-gradient(#070b17 0%, #111b2e 65%, #080b12 100%);
+}
+
+.city {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 27%;
+  opacity: .8;
+  background:
+    linear-gradient(90deg,
+      transparent 0 3%, #080d18 3% 8%,
+      transparent 8% 10%, #080d18 10% 17%,
+      transparent 17% 20%, #080d18 20% 26%,
+      transparent 26% 29%, #080d18 29% 37%,
+      transparent 37% 40%, #080d18 40% 49%,
+      transparent 49% 52%, #080d18 52% 59%,
+      transparent 59% 62%, #080d18 62% 70%,
+      transparent 70% 73%, #080d18 73% 83%,
+      transparent 83% 86%, #080d18 86% 95%,
+      transparent 95%);
+  clip-path: polygon(
+    0 35%, 4% 35%, 4% 15%, 9% 15%, 9% 45%,
+    15% 45%, 15% 5%, 21% 5%, 21% 38%,
+    28% 38%, 28% 20%, 35% 20%, 35% 48%,
+    42% 48%, 42% 0, 49% 0, 49% 38%,
+    57% 38%, 57% 14%, 64% 14%, 64% 45%,
+    72% 45%, 72% 10%, 78% 10%, 78% 35%,
+    85% 35%, 85% 20%, 92% 20%, 92% 42%,
+    100% 42%, 100% 100%, 0 100%
+  );
+}
+
+.light {
+  position: absolute;
+  top: -25%;
+  width: 30vw;
+  height: 100vh;
+  opacity: .14;
+  filter: blur(18px);
+  transform-origin: top center;
+  pointer-events: none;
+}
+
+.light.red {
+  left: 12%;
+  background: linear-gradient(180deg, #ff1744, transparent);
+  transform: rotate(28deg);
+  animation: searchRed 6s ease-in-out infinite alternate;
+}
+
+.light.blue {
+  right: 12%;
+  background: linear-gradient(180deg, #2675ff, transparent);
+  transform: rotate(-28deg);
+  animation: searchBlue 7s ease-in-out infinite alternate;
+}
+
+@keyframes searchRed {
+  to { transform: translateX(16vw) rotate(12deg); opacity: .24; }
+}
+
+@keyframes searchBlue {
+  to { transform: translateX(-16vw) rotate(-12deg); opacity: .24; }
+}
+
+.heli {
+  position: absolute;
+  top: 11%;
+  left: -180px;
+  font-size: clamp(42px, 7vw, 80px);
+  filter: drop-shadow(0 0 14px #7ba6ff);
+  animation: fly 22s linear infinite;
+}
+
+.heli::after {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 2px;
+  background: #9dbdff;
+  left: 35%;
+  top: -5px;
+  transform-origin: left;
+  animation: rotor .08s linear infinite alternate;
+}
+
+@keyframes fly {
+  from { left: -180px; transform: translateY(0); }
+  50% { transform: translateY(28px); }
+  to { left: calc(100% + 180px); transform: translateY(-5px); }
+}
+
+@keyframes rotor {
+  from { transform: rotate(-4deg); }
+  to { transform: rotate(4deg); }
+}
+
+.siren {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 16vw;
+  filter: blur(50px);
+  opacity: .18;
+  pointer-events: none;
+  animation: flash 1.2s steps(2, end) infinite;
+}
+
+.siren.red { left: -9vw; background: var(--red); }
+.siren.blue {
+  right: -9vw;
+  background: var(--blue);
+  animation-delay: .6s;
+}
+
+@keyframes flash {
+  0%, 100% { opacity: .08; }
+  50% { opacity: .28; }
+}
+
+.app {
+  width: min(100% - 24px, 780px);
+  margin: auto;
+  padding: 22px 0 32px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #e4bd73;
+  background: linear-gradient(135deg, #282b39, #0b0e17);
+  color: var(--gold);
+  font-weight: 900;
+  font-size: 19px;
+  transform: skew(-5deg);
+  box-shadow: 0 0 20px #e8b34b24;
+}
+
+.brand h1 {
+  margin: 0;
+  letter-spacing: 3px;
+  font-size: clamp(18px, 4vw, 25px);
+}
+
+.brand p {
+  margin: 5px 0 0;
+  color: #8c9bb6;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+.demo {
+  color: #ff8295;
+  border: 1px solid #ff294b66;
+  background: #ff294b13;
+  padding: 8px 10px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.intro { text-align: center; margin: 28px 0 22px; }
+
+.eyebrow {
+  color: var(--gold);
+  letter-spacing: 4px;
+  font-size: 10px;
+}
+
+.intro h2 {
+  margin: 10px 0;
+  font-size: clamp(27px, 6vw, 43px);
+  letter-spacing: 1px;
+  text-shadow: 0 3px 24px #000;
+}
+
+.intro h2 span {
+  color: var(--gold);
+  text-shadow: 0 0 24px #ffb52f55;
+}
+
+.intro p { color: #a9b4c8; font-size: 12px; }
+
+.machine {
+  padding: 12px;
+  border: 1px solid #d8b77b99;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #202638f2, #090d18f7 65%);
+  box-shadow: 0 20px 70px #000b, 0 0 35px #477fff12,
+    inset 0 0 0 3px #ffffff08;
+}
+
+.machine-head, .machine-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 5px 12px;
+  color: #aab7cf;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+}
+
+.machine-head strong { color: var(--gold); }
+
+.reels {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 5px;
+  padding: 8px;
+  border-radius: 9px;
+  border: 1px solid #ffffff18;
+  background: #05070d;
+  box-shadow: inset 0 0 25px #000;
+}
+
+.symbol {
+  aspect-ratio: .82;
+  min-width: 0;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  border: 1px solid #ffffff14;
+  background:
+    radial-gradient(circle at 50% 30%, #ffffff16, transparent 60%),
+    linear-gradient(145deg, #252d40, #111725);
+  font-size: clamp(22px, 6vw, 43px);
+  text-shadow: 0 3px 8px #0009;
+  transition: transform .15s, border-color .15s;
+}
+
+.symbol::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(130deg, #ffffff09, transparent 45%);
+  pointer-events: none;
+}
+
+.symbol.win {
+  border-color: var(--gold);
+  background: linear-gradient(145deg, #594522, #19170f);
+  box-shadow: 0 0 15px #ffc85b55;
+  animation: winPulse .65s ease-in-out infinite alternate;
+}
+
+@keyframes winPulse {
+  to { transform: scale(.94); box-shadow: 0 0 24px #ffc85b99; }
+}
+
+.machine-foot {
+  padding: 12px 5px 2px;
+  color: #8491a8;
+}
+
+#status { color: #a8c8ff; text-align: right; }
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  gap: 9px;
+  margin-top: 14px;
+}
+
+.stat, .bet {
+  min-width: 0;
+  padding: 13px 10px;
+  border: 1px solid #ffffff19;
+  border-radius: 10px;
+  background: var(--panel);
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  color: #8e9bb3;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.value { font-size: clamp(17px, 4vw, 23px); font-weight: 800; }
+.note { display: block; margin-top: 5px; color: #66748d; font-size: 8px; }
+
+.bet-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.bet-buttons button {
+  width: 27px;
+  height: 27px;
+  border: 1px solid #ffffff25;
+  border-radius: 5px;
+  color: white;
+  background: #ffffff0b;
+  cursor: pointer;
+}
+
+#bet-value { font-size: 18px; }
+
+.spin {
+  border: 1px solid #ffe3a0;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ffda84, #c98929);
+  color: #211607;
+  font-weight: 900;
+  letter-spacing: 2px;
+  cursor: pointer;
+  box-shadow: 0 5px 22px #e8a32f38;
+  transition: transform .15s, filter .15s;
+}
+
+.spin:hover { filter: brightness(1.12); transform: translateY(-1px); }
+.spin:active { transform: scale(.97); }
+.spin:disabled { opacity: .55; cursor: wait; }
+
+.result {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  margin-top: 12px;
+  border: 1px solid #ffffff17;
+  border-radius: 10px;
+  background: #0a0e19dc;
+}
+
+.result-icon { font-size: 26px; color: var(--gold); }
+.result small { color: #8996ae; font-size: 9px; letter-spacing: 1px; }
+.result strong { display: block; margin-top: 5px; font-size: 19px; }
+
+footer {
+  text-align: center;
+  padding-top: 22px;
+  color: #65718a;
+  font-size: 9px;
+  line-height: 1.8;
+  letter-spacing: 1.5px;
+}
+
+@media (max-width: 430px) {
+  .app { width: calc(100% - 16px); padding-top: 14px; }
+  .logo { width: 42px; height: 42px; }
+  .brand { gap: 8px; }
+  .demo { padding: 7px; font-size: 8px; }
+  .machine { padding: 7px; }
+  .reels { gap: 3px; padding: 5px; }
+  .controls { gap: 5px; }
+  .stat, .bet { padding: 10px 7px; }
+  .machine-head, .machine-foot { font-size: 8px; letter-spacing: .7px; }
+}
+</style>
 </head>
 
 <body>
-  <main class="game">
-    <header class="topbar">
-      <div class="brand">
-        <span class="brand-mark">LC</span>
-        <div>
-          <h1>LE COUSIN</h1>
-          <p>OUR LITTLE SECRET</p>
-        </div>
-      </div>
+<div class="scene" aria-hidden="true">
+  <div class="light red"></div>
+  <div class="light blue"></div>
+  <div class="city"></div>
+  <div class="heli">🚁</div>
+</div>
+<div class="siren red" aria-hidden="true"></div>
+<div class="siren blue" aria-hidden="true"></div>
 
-      <div class="demo-badge">
-        <span class="status-dot"></span>
-        DEMO MODE
-      </div>
-    </header>
-
-    <section class="game-header">
-      <p class="eyebrow">WELCOME TO THE FAMILY</p>
-      <h2>LET'S MAKE IT <span>LUCKY.</span></h2>
-      <p class="subtitle">
-        Two cousins. One slot. Endless fun.
-      </p>
-    </section>
-
-    <section class="machine" aria-label="Slot machine">
-      <div class="machine-top">
-        <span class="machine-label">LE COUSIN ORIGINAL</span>
-        <span class="multiplier">✦ 5 × 6 ✦</span>
-      </div>
-
-      <div
-        id="reels"
-        class="reels"
-        role="grid"
-        aria-label="Slot symbols"
-      >
-        <!-- 30 symbols are generated by script.js -->
-      </div>
-
-      <div class="machine-bottom">
-        <span>GOOD LUCK, COUSIN!</span>
-        <span id="game-status" aria-live="polite">
-          READY TO SPIN
-        </span>
-      </div>
-    </section>
-
-    <section class="controls" aria-label="Game controls">
-      <div class="stat-card">
-        <span class="stat-label">BALANCE</span>
-        <strong id="balance">20,000</strong>
-        <span class="stat-note">DEMO CREDITS</span>
-      </div>
-
-      <div class="bet-card">
-        <label for="bet">BET PER SPIN</label>
-        <div class="bet-controls">
-          <button
-            id="bet-down"
-            class="bet-adjust"
-            type="button"
-            aria-label="Decrease bet"
-          >−</button>
-
-          <strong id="bet-value">10</strong>
-
-          <button
-            id="bet-up"
-            class="bet-adjust"
-            type="button"
-            aria-label="Increase bet"
-          >+</button>
-        </div>
-      </div>
-
-      <button id="spin-button" class="spin-button" type="button">
-        <span class="spin-icon">↻</span>
-        <span>SPIN</span>
-      </button>
-    </section>
-
-    <section class="result-panel" aria-live="polite">
-      <span class="result-icon">✦</span>
+<main class="app">
+  <header>
+    <div class="brand">
+      <div class="logo">LC</div>
       <div>
-        <p class="result-label">LAST RESULT</p>
-        <strong id="last-win">0 credits</strong>
+        <h1>LE COUSIN</h1>
+        <p>NIGHT SHIFT • ORIGINAL DEMO</p>
       </div>
-    </section>
+    </div>
+    <div class="demo">● DEMO MODE</div>
+  </header>
 
-    <footer class="footer">
-      <p>MADE BY TWO COUSINS, FOR TWO COUSINS.</p>
-      <p>PRIVATE DEMO · VIRTUAL CREDITS ONLY</p>
-    </footer>
-  </main>
+  <section class="intro">
+    <div class="eyebrow">AFTER DARK</div>
+    <h2>THE <span>NIGHT SHIFT</span></h2>
+    <p>Two cousins. One mission. Pure demo fun.</p>
+  </section>
 
-  <script src="script.js"></script>
+  <section class="machine">
+    <div class="machine-head">
+      <span>LE COUSIN ORIGINAL</span>
+      <strong>✦ 5 × 6 ✦</strong>
+    </div>
+
+    <div class="reels" id="reels" aria-label="Slot grid"></div>
+
+    <div class="machine-foot">
+      <span>VIRTUAL CREDITS ONLY</span>
+      <span id="status" aria-live="polite">READY TO SPIN</span>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="stat">
+      <span class="label">BALANCE</span>
+      <strong class="value" id="balance">1,000</strong>
+      <span class="note">DEMO CREDITS</span>
+    </div>
+
+    <div class="bet">
+      <span class="label">BET / SPIN</span>
+      <div class="bet-buttons">
+        <button id="bet-down" aria-label="Decrease bet">−</button>
+        <strong id="bet-value">10</strong>
+        <button id="bet-up" aria-label="Increase bet">+</button>
+      </div>
+      <span class="note">VIRTUAL BET</span>
+    </div>
+
+    <button class="spin" id="spin">↻ SPIN</button>
+  </section>
+
+  <section class="result" aria-live="polite">
+    <div class="result-icon">✦</div>
+    <div>
+      <small>LAST RESULT</small>
+      <strong id="win">0 credits</strong>
+    </div>
+  </section>
+
+  <footer>
+    MADE BY TWO COUSINS, FOR TWO COUSINS.<br>
+    PRIVATE DEMO CONCEPT • NO REAL MONEY
+  </footer>
+</main>
+
+<script>
+const symbols = [
+  { icon: "🚔", weight: 3, pay: 8 },
+  { icon: "🚁", weight: 3, pay: 8 },
+  { icon: "🚨", weight: 5, pay: 5 },
+  { icon: "⭐", weight: 7, pay: 4 },
+  { icon: "💎", weight: 8, pay: 3 },
+  { icon: "🔒", weight: 10, pay: 2 },
+  { icon: "🕶️", weight: 10, pay: 2 },
+  { icon: "💵", weight: 12, pay: 2 }
+];
+
+const reels = document.getElementById("reels");
+const balanceText = document.getElementById("balance");
+const betText = document.getElementById("bet-value");
+const winText = document.getElementById("win");
+const statusText = document.getElementById("status");
+const spinButton = document.getElementById("spin");
+
+let balance = 1000;
+let bet = 10;
+let spinning = false;
+let cells = [];
+
+function randomSymbol() {
+  const total = symbols.reduce((sum, symbol) => sum + symbol.weight, 0);
+  let roll = Math.random() * total;
+
+  for (const symbol of symbols) {
+    roll -= symbol.weight;
+    if (roll < 0) return symbol;
+  }
+
+  return symbols[symbols.length - 1];
+}
+
+function renderGrid() {
+  reels.innerHTML = "";
+  cells = [];
+
+  for (let i = 0; i < 30; i++) {
+    const cell = document.createElement("div");
+    cell.className = "symbol";
+    cell.setAttribute("role", "gridcell");
+
+    const symbol = randomSymbol();
+    cell.textContent = symbol.icon;
+    cell.dataset.symbol = symbol.icon;
+
+    reels.appendChild(cell);
+    cells.push(cell);
+  }
+}
+
+function updateUI() {
+  balanceText.textContent = balance.toLocaleString("en-US");
+  betText.textContent = bet;
+  document.getElementById("bet-down").disabled = spinning || bet <= 10;
+  document.getElementById("bet-up").disabled = spinning || bet >= 100;
+  spinButton.disabled = spinning || balance < bet;
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function evaluateGrid() {
+  let payout = 0;
+  let wins = [];
+
+  // Demo rule: evaluate horizontal groups of 3+ matching symbols.
+  for (let row = 0; row < 6; row++) {
+    let col = 0;
+
+    while (col < 5) {
+      const start = row * 5 + col;
+      const icon = cells[start].dataset.symbol;
+      let length = 1;
+
+      while (
+        col + length < 5 &&
+        cells[row * 5 + col + length].dataset.symbol === icon
+      ) {
+        length++;
+      }
+
+      if (length >= 3) {
+        const symbol = symbols.find(item => item.icon === icon);
+        payout += bet * symbol.pay * (length - 2);
+        for (let i = 0; i < length; i++) {
+          wins.push(cells[row * 5 + col + i]);
+        }
+      }
+
+      col += length;
+    }
+  }
+
+  wins.forEach(cell => cell.classList.add("win"));
+  return payout;
+}
+
+async function spin() {
+  if (spinning || balance < bet) return;
+
+  spinning = true;
+  balance -= bet;
+  winText.textContent = "Spinning...";
+  statusText.textContent = "MISSION IN PROGRESS";
+  updateUI();
+
+  cells.forEach(cell => cell.classList.remove("win"));
+
+  // A short visual shuffle before the result settles.
+  for (let frame = 0; frame < 8; frame++) {
+    cells.forEach(cell => {
+      const symbol = randomSymbol();
+      cell.textContent = symbol.icon;
+      cell.dataset.symbol = symbol.icon;
+    });
+    await sleep(85 + frame * 12);
+  }
+
+  const payout = evaluateGrid();
+  balance += payout;
+
+  winText.textContent = payout.toLocaleString("en-US") + " credits";
+  statusText.textContent = payout > 0 ? "NICE HIT!" : "TRY AGAIN";
+  spinning = false;
+  updateUI();
+}
+
+document.getElementById("bet-down").addEventListener("click", () => {
+  if (spinning) return;
+  bet = Math.max(10, bet - 10);
+  updateUI();
+});
+
+document.getElementById("bet-up").addEventListener("click", () => {
+  if (spinning) return;
+  bet = Math.min(100, bet + 10);
+  updateUI();
+});
+
+spinButton.addEventListener("click", spin);
+
+renderGrid();
+updateUI();
+</script>
 </body>
 </html>
