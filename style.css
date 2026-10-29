@@ -37,3 +37,49 @@ body {
   from { opacity: .55; }
   to   { opacity: 1; }
 }
+
+/* Police light reflections */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 24vw;
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(45px);
+  opacity: .35;
+}
+
+body::before {
+  left: -12vw;
+  background: #e81735;
+  animation: redSiren 2.4s infinite alternate;
+}
+
+body::after {
+  right: -12vw;
+  background: #1768ff;
+  animation: blueSiren 2.4s infinite alternate;
+}
+
+@keyframes redSiren {
+  0%, 100% { opacity: .12; }
+  50%      { opacity: .5; }
+}
+
+@keyframes blueSiren {
+  0%, 100% { opacity: .5; }
+  50%      { opacity: .12; }
+}
+
+/* Ground fog */
+.game {
+  background:
+    linear-gradient(
+      180deg,
+      transparent 65%,
+      rgba(100, 130, 180, .07) 100%
+    );
+}
