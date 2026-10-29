@@ -289,6 +289,35 @@ header {
 .reel:last-child { border-right: 0; }
 
 .symbol {
+  
+/* Smooth vertical motion while a reel is spinning */
+.reel {
+  overflow: hidden;
+  position: relative;
+}
+
+.symbol.spinning {
+  animation: symbolRoll 0.11s linear infinite;
+  filter: blur(1.2px);
+  opacity: 0.82;
+}
+
+@keyframes symbolRoll {
+  0% {
+    transform: translateY(-14px);
+    opacity: 0.65;
+  }
+  100% {
+    transform: translateY(14px);
+    opacity: 1;
+  }
+}
+
+.symbol.win {
+  animation: winPulse 0.7s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 9px #ffd477);
+}
+
   min-width: 0;
   aspect-ratio: .8;
   display: grid;
@@ -629,15 +658,73 @@ function evaluateGrid() {
 }
 
 async function spin() {
+ 
+async function spin() {
   if (spinning || balance < bet) return;
 
   spinning = true;
   balance -= bet;
+
   winText.textContent = "Spinning...";
   statusText.textContent = "MISSION IN PROGRESS";
 
-  cells.forEach(cell => cell.classList.remove("win"));
+  cells.forEach(cell => {
+    cell.classList.remove("win", "spinning");
+  });
+
   updateUI();
+
+  const reels = Array.from(
+    document.querySelectorAll(".reel")
+  );
+
+  // Each column gets its own random result and spin.
+  for (let col = 0; col < 5; col++) {
+    const reel = reels[col];
+    const reelCells = cells.slice(col * 6, col * 6 + 6);
+
+    reelCells.forEach(cell => cell.classList.add("spinning"));
+
+    // The later columns spin longer before stopping.
+    const duration = 850 + col * 250;
+    const start = performance.now();
+
+    while (performance.now() - start < duration) {
+      reelCells.forEach(cell => {
+        const item = randomSymbol();
+        cell.textContent = item.icon;
+        cell.dataset.symbol = item.icon;
+      });
+
+      await sleep(55);
+    }
+
+    // Final random symbols for this column.
+    reelCells.forEach(cell => {
+      const item = randomSymbol();
+      cell.textContent = item.icon;
+      cell.dataset.symbol = item.icon;
+      cell.classList.remove("spinning");
+    });
+
+    // Small pause before the next column starts.
+    await sleep(160);
+  }
+
+  // Check for a win only after all five columns stop.
+  const payout = evaluateGrid();
+  balance += payout;
+
+  winText.textContent =
+    payout.toLocaleString("en-US") + " credits";
+
+  statusText.textContent =
+    payout > 0 ? "NICE HIT!" : "NO HIT — TRY AGAIN";
+
+  spinning = false;
+  updateUI();
+}
+
 
   for (let frame = 0; frame < 10; frame++) {
     cells.forEach(cell => {
